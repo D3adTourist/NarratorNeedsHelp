@@ -1,4 +1,8 @@
+import { useState } from 'react';
+
 export default function Controls({ isDarkMode, onToggleDarkMode }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -8,28 +12,37 @@ export default function Controls({ isDarkMode, onToggleDarkMode }) {
   };
 
   return (
-    <div className="controls">
-      <button 
-        className="control-button" 
-        onClick={onToggleDarkMode}
-        title={isDarkMode ? '☀️ Too bright! Go back!' : '🌙 Join the dark side...'}
-      >
-        {isDarkMode ? '☀️' : '🌙'}
-      </button>
-      <button 
-        className="control-button" 
-        onClick={scrollToTop}
-        title="🚀 Beam me up, Scotty!"
-      >
-        ⬆️
-      </button>
-      <button 
-        className="control-button" 
-        onClick={scrollToBottom}
-        title="🏊 Dive to the bottom!"
-      >
-        ⬇️
-      </button>
+    <div 
+      className="controls"
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
+    >
+      <div className={`controls-menu ${isExpanded ? 'expanded' : ''}`}>
+        <button 
+          className="control-button" 
+          onClick={onToggleDarkMode}
+          title={isDarkMode ? '☀️ Light mode' : '🌙 Dark mode'}
+        >
+          {isDarkMode ? '☀️' : '🌙'}
+        </button>
+        <button 
+          className="control-button" 
+          onClick={scrollToTop}
+          title="🚀 Jump to top"
+        >
+          ⬆️
+        </button>
+        <button 
+          className="control-button" 
+          onClick={scrollToBottom}
+          title="🏊 Jump to bottom"
+        >
+          ⬇️
+        </button>
+      </div>
+      <div className="control-trigger">
+        <span className="control-icon">⚙️</span>
+      </div>
     </div>
   );
 }
